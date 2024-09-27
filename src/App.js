@@ -20,7 +20,7 @@ function Login() {
       setError('Error de autenticación. Revise sus credenciales');
     }
   };
-
+//si
   return (
     <div style={{ textAlign: 'center', marginTop: '10px' }}>
       <h1>Adopta un robot con RobotLovers!</h1>
