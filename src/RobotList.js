@@ -1,18 +1,44 @@
 import bannerimg from './banner.jpg';
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
+import { FormattedMessage } from "react-intl";
 
 function RobotList() {
-  const defaultImg = 'https://m.media-amazon.com/images/I/31MqR2pPE5L._AC_.jpg'; 
-  const products = [
-    { id: 1, nombre: 'Pedrito', modelo: 'NRG-500', empresa: 'Robotico Corp', year: 2020, capacidad: '2.5 GHz', humor: 'Alegre y juguetón, tiene un comportamiento similar al de un gatito curios, siempre metiendose en temas de tecnología', img:defaultImg},
-    { id: 2, nombre: 'Iron chef', modelo: 'NRG-5001', empresa: 'Robotico Corp', year: 2021, capacidad: '3.0 GHz', humor: 'Alegre y juguetón, tiene un comportamiento similar al de un gatito curios, siempre metiendose en temas de tecnología',img:defaultImg },
-    { id: 3, nombre: 'chispita', modelo: 'NRG-500 C', empresa: 'Robotico Corp Z', year: 2022, capacidad: '3.5 GHz', humor: 'Alegre y juguetón, tiene un comportamiento similar al de un gatito curios, siempre metiendose en temas de tecnología',img:defaultImg },
-    { id: 1, nombre: 'sir calculin', modelo: 'NRG-500 A', empresa: 'Robotico Corp X', year: 2020, capacidad: '2.5 GHz', humor: 'Alegre y juguetón, tiene un comportamiento similar al de un gatito curios, siempre metiendose en temas de tecnología',img:defaultImg},
-    { id: 2, nombre: 'doctora bot', modelo: 'NRG-500 B', empresa: 'Robotico Corp Y', year: 2021, capacidad: '3.0 GHz', humor: 'Alegre y juguetón, tiene un comportamiento similar al de un gatito curios, siempre metiendose en temas de tecnología',img:defaultImg },
-    { id: 3, nombre: 'Zumba bot', modelo: 'NRG-500 C', empresa: 'Robotico Corp Z', year: 2022, capacidad: '3.5 GHz', humor: 'Alegre y juguetón, tiene un comportamiento similar al de un gatito curios, siempre metiendose en temas de tecnología',img:defaultImg },
-  ];
 
-  const [selectedProduct, setSelectedProduct] = useState(null);
+
+
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [robots, setRobots] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+  
+    useEffect(() => {
+
+      fetch('http://localhost:3001/robots')
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Error al obtener la lista de robots');
+          }
+          return response.json();  
+        })
+        .then((data) => {
+          setRobots(data);  
+          setLoading(false); 
+        })
+        .catch((err) => {
+          setError(err.message);  
+          setLoading(false);  
+        });
+    }, []);  
+  
+    if (loading) {
+      return <p>Cargando...</p>;
+    }
+  
+    if (error) {
+      return <p>Error: {error}</p>; 
+    }
+  
+
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -35,14 +61,14 @@ function RobotList() {
           <table style={{ margin: '0 auto', borderCollapse: 'collapse', width: '100%' }}>
             <thead>
               <tr style={{ backgroundColor: '#333', color: '#fff' }}>
-                <th style={{ padding: '10px', border: '1px solid #ddd' }}>ID</th>
-                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Nombre</th>
-                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Modelo</th>
-                <th style={{ padding: '10px', border: '1px solid #ddd' }}>Empresa Fabricante</th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}> <FormattedMessage id= "ID" /> </th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}> <FormattedMessage id= "Name" /> </th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}> <FormattedMessage id= "Model" /> </th>
+                <th style={{ padding: '10px', border: '1px solid #ddd' }}> <FormattedMessage id= "Manufacturing Company" /></th>
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {robots.map((product) => (
                 <tr 
                   key={product.id} 
                   style={{ backgroundColor: '#f2f2f2', cursor: 'pointer' }} 
@@ -51,14 +77,14 @@ function RobotList() {
                   <td style={{ padding: '10px', border: '1px solid #ddd' }}>{product.id}</td>
                   <td style={{ padding: '10px', border: '1px solid #ddd' }}>{product.nombre}</td>
                   <td style={{ padding: '10px', border: '1px solid #ddd' }}>{product.modelo}</td>
-                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{product.empresa}</td>
+                  <td style={{ padding: '10px', border: '1px solid #ddd' }}>{product.empresaFabricante}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        <div className='col' style={{ width: '300px', marginLeft: '20px' }}>
+        <div className='col' style={{ width: '400px', marginLeft: '20px' }}>
           {selectedProduct && (
             <div 
               style={{ 
@@ -70,7 +96,9 @@ function RobotList() {
             >
               <h2 style={{textAlign:'center'}}>{selectedProduct.nombre}</h2>
                             <img  
-                src={selectedProduct.img}  
+                src={'https://raw.githubusercontent.com/fai-aher/T34-Wiki-Backup/refs/heads/main/images/robot'+ selectedProduct.id + '.png'  }
+
+                //el src en realidad podría ser selectedRobot.imagen, sin embargo los links de github proporcionados  por el back daban problemas al cargar las imágener
                 alt="Imagen de Producto" 
                 style={{ 
                     width: '120px', 
@@ -82,10 +110,9 @@ function RobotList() {
                     marginRight: 'auto' 
                 }} 
                 />
-
-              <p><strong> - Año de fabricación:</strong> {selectedProduct.year}</p>
-              <p><strong> - Capacidad de procesamiento:</strong> {selectedProduct.capacidad}</p>
-              <p><strong> - Humor:</strong> {selectedProduct.humor}</p>
+              <p><strong> →<FormattedMessage id= "Year of manufacture" />:</strong> {selectedProduct.añoFabricacion}</p>
+              <p><strong> →<FormattedMessage id= "Processing capacity" />:</strong> {selectedProduct.capacidadProcesamiento}</p>
+              <p><strong> → <FormattedMessage id= "Humor" />:</strong> {selectedProduct.humor}</p>
             </div>
           )}
         </div>
