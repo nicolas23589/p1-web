@@ -69,17 +69,20 @@ function RobotList() {
               }}
             >
               <h2 style={{textAlign:'center'}}>{selectedProduct.nombre}</h2>
-              <img  
-                src={selectedProduct.img }  
+                            <img  
+                src={selectedProduct.img}  
                 alt="Imagen de Producto" 
                 style={{ 
-                  width: '120px', 
-                  textAlign:'center',
-                  height: '120px', 
-                  border: '2px solid #333', 
-                  marginBottom: '20px' 
+                    width: '120px', 
+                    height: '120px', 
+                    border: '2px solid #333', 
+                    marginBottom: '20px', 
+                    display: 'block', 
+                    marginLeft: 'auto', 
+                    marginRight: 'auto' 
                 }} 
-              />
+                />
+
               <p><strong> - Año de fabricación:</strong> {selectedProduct.year}</p>
               <p><strong> - Capacidad de procesamiento:</strong> {selectedProduct.capacidad}</p>
               <p><strong> - Humor:</strong> {selectedProduct.humor}</p>
