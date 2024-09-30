@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import bannerimg from './banner.jpg'; 
 import RobotList from './RobotList';
+import { FormattedMessage } from "react-intl";
+
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -11,8 +13,8 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    const validUsername = 'usuario';
-    const validPassword = 'contraseña';
+    const validUsername = 'admin';
+    const validPassword = 'pass';
 
     if (username === validUsername && password === validPassword) {
       navigate('/home');
@@ -23,42 +25,43 @@ function Login() {
 //si
   return (
     <div style={{ textAlign: 'center', marginTop: '10px' }}>
-      <h1>Adopta un robot con RobotLovers!</h1>
+      <h1><FormattedMessage id= "Title" /></h1>
       <img 
         src= {bannerimg }
         alt="Banner" 
         style={{ width: '75%', height: '10%' }}
       />
-      <h2>Inicio de Sesión</h2>
-      <p> Elemento visto solo en modo desarrollo, el usuario y el password son: 'usuario' y 'contraseña'</p>
+      <h2><FormattedMessage id= "LogIn" /></h2>
+
       <div>
-        <p>Nombre de usuario:</p>
+        <p style={{fontWeight: 'bold' }} ><FormattedMessage id= "Username" />:</p>
         <input 
+
           type="text" 
-          placeholder="" 
+          placeholder="a.acosta" 
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          style={{ display: 'block', margin: '10px auto' }}
+          style={{ display: 'block', margin: '10px auto', backgroundColor: '#DBD7D2', width:'35%', height:'25px'}}
         />
-        <p  style={{textAlign: 'center'}} >Contraseña: </p>
+        <p  style={{fontWeight: 'bold' }} ><FormattedMessage id= "Password" />:</p>
         <input 
           type="password" 
-          placeholder="" 
+          placeholder="******" 
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ display: 'block', margin: '10px auto' }}
+          style={{ display: 'block', margin: '10px auto' , backgroundColor:'#DBD7D2',width:'35%', height:'25px'}}
         />
       </div>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p style={{ color: 'red',fontWeight: 'bold' }}>{error} </p>}
       <div>
         <button 
           onClick={handleLogin} 
-          style={{ backgroundColor: 'blue', color: 'white', marginRight: '10px' }}>
+          style={{ backgroundColor: 'blue', color: 'white', marginRight: '80px' , width:'15%'}}>
           Ingresar
         </button>
         <button 
           onClick={() => navigate('/')} 
-          style={{ backgroundColor: 'red', color: 'white' }}>
+          style={{ backgroundColor: 'red', color: 'white' , width:'15%'}}>
           Cancelar
         </button>
       </div>

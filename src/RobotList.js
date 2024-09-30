@@ -57,7 +57,7 @@ function RobotList() {
       <div className='row' style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
 
         <div className='col' style={{ width: '50%' }}>
-          <h2>Listado de Robots</h2>
+      
           <table style={{ margin: '0 auto', borderCollapse: 'collapse', width: '100%' }}>
             <thead>
               <tr style={{ backgroundColor: '#333', color: '#fff' }}>
@@ -99,10 +99,10 @@ function RobotList() {
                 src={'https://raw.githubusercontent.com/fai-aher/T34-Wiki-Backup/refs/heads/main/images/robot'+ selectedProduct.id + '.png'  }
 
                 //el src en realidad podría ser selectedRobot.imagen, sin embargo los links de github proporcionados  por el back daban problemas al cargar las imágener
-                alt="Imagen de Producto" 
+                alt="Imagen de Robot" 
                 style={{ 
-                    width: '120px', 
-                    height: '120px', 
+                    width: '160px', 
+                    height: '160px', 
                     border: '2px solid #333', 
                     marginBottom: '20px', 
                     display: 'block', 
