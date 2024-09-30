@@ -46,7 +46,7 @@ function RobotList() {
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Adopta un robot con RobotLovers!</h1>
+      <h1> <FormattedMessage id="Title" /> </h1>
       <img 
         src={bannerimg}
         alt="Banner" 
