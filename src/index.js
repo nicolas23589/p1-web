@@ -12,8 +12,6 @@ import localeEnMessages from "./locales/en";
 const locale = navigator.language.startsWith('es') ? 'es-ES' : 'en-US';
 const messages = locale.startsWith('es') ? localeEsMessages : localeEnMessages;
 
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
